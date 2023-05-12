@@ -41,9 +41,8 @@ jobs:
           sudo vim axios.js
           E
           :3,3d
-          echo ":3,3d"
-          echo ":3,3s/^/axios.defaults.baseURL = 'http:\/\/ec2-44-203-110-48.compute-1.amazonaws.com:8000\/'\r/"
-          echo ":wq"
+          :3,3s/^/axios.defaults.baseURL = 'http:\/\/ec2-44-203-110-48.compute-1.amazonaws.com:8000\/'\r/
+          :wq
           
           cd -
           sudo docker-compose down
