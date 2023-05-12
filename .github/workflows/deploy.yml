@@ -22,9 +22,9 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           if [ -d "api_dashboard" ]; then
-            cd Nhom01-DeTai01-Label-Studio
+            cd api_dashboard
             git pull https://github.com/TranHuynhTanPhat/api_dashboard.git
-            cd ../
+            cd ~
           else
             git clone https://github.com/TranHuynhTanPhat/api_dashboard.git
           fi
