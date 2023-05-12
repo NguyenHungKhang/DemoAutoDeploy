@@ -54,7 +54,7 @@ jobs:
           sed -i -e '12,12d' index.py
           sed -i -e '12,12s/^/\t"http:\/\/${{ secrets.HOST }}:8080"\n/' index.py
           
-          cd~
+          cd ~
           
     - name: Run Project
       uses: appleboy/ssh-action@master
