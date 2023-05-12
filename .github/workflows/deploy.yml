@@ -21,4 +21,13 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          ls
+          if [ -d "Nhom01-DeTai01-Label-Studio" ]; then
+            cd Nhom01-DeTai01-Label-Studio
+            git pull https://github.com/KhaiNguyenDuc/Nhom01-DeTai01-Label-Studio.git && \echo "Pull completed"
+            cd ../
+          else
+            git clone https://github.com/KhaiNguyenDuc/Nhom01-DeTai01-Label-Studio.git && \echo "Clone completed"
+          fi
+          
+          cd api_dashboard/front-end
+          sudo docker-composer up -d
