@@ -39,7 +39,7 @@ jobs:
           
           cd api_dashboard/front-end/src
           sed -i -e '3,3d' axios.js
-          sed -i -e '3,3s/^/axios.defaults.baseURL = 'http:\/\/ec2-44-203-110-48.compute-1.amazonaws.com:8000\/'\r/' axios.js
+          sed -i -e "3,3s/^/axios.defaults.baseURL = 'http:\/\/ec2-44-203-110-48.compute-1.amazonaws.com:8000\/'\n/" axios.js
           
           cd -
           sudo docker-compose down
@@ -49,7 +49,7 @@ jobs:
           cd ~
           cd api_dashboard/back-end/app
           sed -i -e '12,12d' index.py
-          sed -i -e '12,12s/^/\t"http:\/\/ec2-44-203-110-48.compute-1.amazonaws.com:8080"\r/' index.py
+          sed -i -e '12,12s/^/\t"http:\/\/ec2-44-203-110-48.compute-1.amazonaws.com:8080"\n/' index.py
           
           cd -
           sudo docker-compose down
