@@ -1,0 +1,38 @@
+name: Deploy Back-end
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions: read-all
+
+jobs:
+  deploy:
+    name: Deploy Back-end to EC2
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2 
+
+    - name: SSH into EC2 instance + deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_BACKEND }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          sudo yum update
+          sudo yum install docker
+          sudo yum install git
+          sudo service docker start
+          
+          if [ -d "api_dashboard" ]; then
+            cd api_dashboard
+            git pull https://github.com/TranHuynhTanPhat/api_dashboard.git
+            cd ~
+          else
+            git clone https://github.com/TranHuynhTanPhat/api_dashboard.git
+          fi
+          
+          cd api_dashboard/back-end
+          sudo docker-compose up -d
