@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Front-end
 
 on:
   push:
@@ -8,7 +8,7 @@ permissions: read-all
 
 jobs:
   deploy:
-    name: Deploy to EC2
+    name: Deploy Front-end to EC2
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2 
@@ -21,6 +21,11 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script: |
+          sudo yum update
+          sudo yum install docker
+          sudo yum install git
+          sudo service docker start
+          
           if [ -d "api_dashboard" ]; then
             cd api_dashboard
             git pull https://github.com/TranHuynhTanPhat/api_dashboard.git
