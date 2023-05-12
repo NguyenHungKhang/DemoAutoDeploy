@@ -40,7 +40,8 @@ jobs:
           cd api_dashboard/front-end/src
           sudo vim axios.js
           E
-          echo "\x03"
+          :
+          3,3d
           echo ":3,3d"
           echo ":3,3s/^/axios.defaults.baseURL = 'http:\/\/ec2-44-203-110-48.compute-1.amazonaws.com:8000\/'\r/"
           echo ":wq"
@@ -54,7 +55,6 @@ jobs:
           cd api_dashboard/back-end/app
           sudo vim index.py
           E
-          \x03
           :12,12d
           :12,12s/^/\t"http:\/\/ec2-44-203-110-48.compute-1.amazonaws.com:8080"\r/
           :wq
