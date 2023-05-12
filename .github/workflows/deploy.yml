@@ -21,12 +21,12 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          if [ -d "Nhom01-DeTai01-Label-Studio" ]; then
+          if [ -d "api_dashboard" ]; then
             cd Nhom01-DeTai01-Label-Studio
-            git pull https://github.com/KhaiNguyenDuc/Nhom01-DeTai01-Label-Studio.git && \echo "Pull completed"
+            git pull https://github.com/TranHuynhTanPhat/api_dashboard.git
             cd ../
           else
-            git clone https://github.com/KhaiNguyenDuc/Nhom01-DeTai01-Label-Studio.git && \echo "Clone completed"
+            git clone https://github.com/TranHuynhTanPhat/api_dashboard.git
           fi
           
           cd api_dashboard/front-end
