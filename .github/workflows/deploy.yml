@@ -37,13 +37,25 @@ jobs:
             git clone https://github.com/TranHuynhTanPhat/api_dashboard.git
           fi
           
-          cd api_dashboard/front-end
+          cd api_dashboard/front-end/src
+          sudo vim axios.js
+          :3,3d
+          :3,3s/^/axios.defaults.baseURL = 'http:\/\/ec2-44-203-110-48.compute-1.amazonaws.com:8000\/'\r/
+          :wq
+          
+          cd -
           sudo docker-compose down
           sudo docker image rmi --force front-end-app
           sudo docker-compose up -d
           
           cd ~
-          cd api_dashboard/back-end
+          cd api_dashboard/back-end/app
+          sudo vim index.py
+          :12,12d
+          :12,12s/^/\t"http:\/\/ec2-44-203-110-48.compute-1.amazonaws.com:8080"\r/
+          :wq
+          
+          cd -
           sudo docker-compose down
           sudo docker image rmi --force back-end-app
           sudo docker-compose up -d
