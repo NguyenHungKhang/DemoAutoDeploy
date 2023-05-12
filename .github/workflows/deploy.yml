@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2 
 
-    - name: SSH into EC2 instance + deploy
+    - name: SSH Config
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -37,21 +37,37 @@ jobs:
             git clone https://github.com/TranHuynhTanPhat/api_dashboard.git
           fi
           
+    - name: Config Project 
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
           cd api_dashboard/front-end/src
           sed -i -e '3,3d' axios.js
           sed -i -e "3,3s/^/axios.defaults.baseURL = 'http:\/\/ec2-44-203-110-48.compute-1.amazonaws.com:8000\/'\n/" axios.js
-          
-          cd -
-          sudo docker-compose down
-          sudo docker image rmi --force front-end-app
-          sudo docker-compose up -d
           
           cd ~
           cd api_dashboard/back-end/app
           sed -i -e '12,12d' index.py
           sed -i -e '12,12s/^/\t"http:\/\/ec2-44-203-110-48.compute-1.amazonaws.com:8080"\n/' index.py
           
-          cd -
+    - name: Run Project
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |    
+          cd api_dashboard/front-end
+          sudo docker-compose down
+          sudo docker image rmi --force front-end-app
+          sudo docker-compose up -d
+          
+          cd api_dashboard/back-end
           sudo docker-compose down
           sudo docker image rmi --force back-end-app
           sudo docker-compose up -d
