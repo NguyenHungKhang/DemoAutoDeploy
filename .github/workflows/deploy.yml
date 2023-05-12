@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2 
 
-    - name: SSH into EC2 instance + deploy front-end
+    - name: SSH into EC2 instance + deploy
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -40,33 +40,11 @@ jobs:
           cd api_dashboard/front-end
           sudo docker-compose down
           sudo docker image rmi --force front-end-app
-          sudo docker-compose up -d 
-    - name: SSH into EC2 instance + deploy back-end
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST_BACKEND }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PRIVATE_KEY }}
-        port: ${{ secrets.SSH_PORT }}
-        script: |
-         sudo yum update
-          sudo yum install docker -y
-          sudo yum install git -y
-          sudo service docker start
-          sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose -y
-          sudo chmod +x /usr/local/bin/docker-compose -y
-          docker-compose version
+          sudo docker-compose up -d
           
-          if [ -d "api_dashboard" ]; then
-            cd api_dashboard
-            git pull https://github.com/TranHuynhTanPhat/api_dashboard.git
-            cd ~
-          else
-            git clone https://github.com/TranHuynhTanPhat/api_dashboard.git
-          fi
-          
+          cd ~
           cd api_dashboard/back-end
           sudo docker-compose down
           sudo docker image rmi --force back-end-app
           sudo docker-compose up -d
-          
+ 
