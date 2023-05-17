@@ -46,13 +46,13 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           cd api_dashboard/front-end/src
-          sed -i -e '3,3d' axios.js
-          sed -i -e "3,3s/^/axios.defaults.baseURL = 'http:\/\/${{ secrets.HOST }}:8000\/'\n/" axios.js
+          sudo sed -i -e '3,3d' axios.js
+          sudo sed -i -e "3,3s/^/axios.defaults.baseURL = 'http:\/\/${{ secrets.HOST }}:8000\/'\n/" axios.js
           
           cd ~
           cd api_dashboard/back-end/app
-          sed -i -e '12,12d' index.py
-          sed -i -e '12,12s/^/\t"http:\/\/${{ secrets.HOST }}:8080"\n/' index.py
+          sudo sed -i -e '12,12d' index.py
+          sudo sed -i -e '12,12s/^/\t"http:\/\/${{ secrets.HOST }}:8080"\n/' index.py
           
           cd ~
           
